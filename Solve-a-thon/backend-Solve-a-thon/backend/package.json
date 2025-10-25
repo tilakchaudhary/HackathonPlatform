@@ -1,12 +1,11 @@
 {
   "name": "hackathon-backend",
   "version": "1.0.0",
+  "description": "Hackathon backend for HACKFLY",
   "main": "src/server.js",
-  "license": "MIT",
   "scripts": {
     "start": "node src/server.js",
-    "dev": "nodemon --watch src --exec node src/server.js",
-    "seed": "node scripts/seedAdmin.js"
+    "dev": "nodemon src/server.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -14,8 +13,8 @@
     "dotenv": "^16.0.0",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.0",
-    "mongoose": "^6.9.0",
-    "socket.io": "^4.7.1"
+    "mongoose": "^7.0.0",
+    "multer": "^1.4.5-lts.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.22"

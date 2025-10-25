@@ -1,32 +1,38 @@
+// src/App.jsx
 import React from "react";
-import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
+
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import About from "./pages/About";
 import Issues from "./pages/Issues";
 import ProtectedRoute from "./components/ProtectedRoute";
+
 import AdminDashboard from "./pages/AdminDashboard";
 import JudgeDashboard from "./pages/JudgeDashboard";
 import OrganizerDashboard from "./pages/OrganizerDashboard";
+import OrganizerHackathons from "./pages/OrganizerHackathons";
 import ParticipantDashboard from "./pages/ParticipantDashboard";
 import Main from "./pages/Main";
 import Home from "./pages/Home";
+import HackathonDetails from "./pages/HackathonDetails";
+import Dashboard from "./components/Dashboard"; // <-- correct path
 
 export default function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
         <Routes>
-          {/* Public routes */}
+          {/* Public */}
           <Route path="/" element={<Main />} />
-          <Route path="/" element={<Home />} />
+          <Route path="/home" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/about" element={<About />} />
           <Route path="/issues" element={<Issues />} />
 
-          {/* Protected role-based dashboards */}
+          {/* Admin */}
           <Route
             path="/admin"
             element={
@@ -35,6 +41,8 @@ export default function App() {
               </ProtectedRoute>
             }
           />
+
+          {/* Judge */}
           <Route
             path="/judge"
             element={
@@ -43,14 +51,23 @@ export default function App() {
               </ProtectedRoute>
             }
           />
-          <Route
-            path="/organizer"
-            element={
-              <ProtectedRoute allowedRoles={["organizer"]}>
-                <OrganizerDashboard />
-              </ProtectedRoute>
-            }
-          />
+
+          {/* Organizer routes wrapped with DashboardLayout */}
+         <Route
+  path="/organizer"
+  element={
+    <ProtectedRoute allowedRoles={["organizer"]}>
+      <Dashboard />
+    </ProtectedRoute>
+  }
+>
+  <Route index element={<OrganizerDashboard />} />
+  <Route path="hackathons" element={<OrganizerHackathons />} />
+  <Route path="hackathons/:id" element={<HackathonDetails />} />
+</Route>
+
+
+          {/* Participant */}
           <Route
             path="/participant"
             element={

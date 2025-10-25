@@ -1,15 +1,16 @@
-import React from "react";
+// src/services/api.js
+import axios from "axios";
 
-import axios from 'axios';
-
-const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
+const API = axios.create({
+  baseURL: "http://localhost:5000/api",
+  timeout: 10000
 });
 
-api.interceptors.request.use(config => {
-  const token = localStorage.getItem('token');
+// attach token automatically
+API.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token");
   if (token) config.headers.Authorization = `Bearer ${token}`;
   return config;
 });
 
-export default api;
+export default API;
